@@ -16,6 +16,7 @@ public:
     //constructor que pide como argumentos las coordenadas x e y y las asigna a los valores correspondientes
     Point(int x_cor, int y_cor){x=x_cor; y= y_cor;}
     ~Point(){delete this;};
+    //función que imprime las coordenadas de un punto
     void print_point(Point point);
 };
 
@@ -31,7 +32,6 @@ void Point::print_point(Point point){
 class Rectangle
 {
 private:
-    /* data */
 public:
     int x, y, w, h;
     //constructor pide una cordenada x,y y además la altura y ancho del rectángulo
@@ -43,10 +43,10 @@ public:
 
 Rectangle::Rectangle(int x_cor=0, int y_cor=0, int width=0, int height=0)
 {
-    x=x_cor;
-    y=y_cor;
-    w=width;
-    h=height;
+    x=x_cor; //coordenada x del rectangulo
+    y=y_cor; //coordenada y del rectangulo
+    w=width; //ancho del rectangulo
+    h=height; //alto del rectangulo
 }
 
 Rectangle::~Rectangle()
@@ -54,12 +54,14 @@ Rectangle::~Rectangle()
 }
 
 bool Rectangle::contain(Point point){
-    //bool ans = (point.x > x - w && point.x < x+y && point.y > y-h && point.y < y+h);
-    return true;
+    bool ans = ((point.x > x - w && point.x < x+y) && (point.y > y-h && point.y < y+h));
+    return ans;
 }
 
 //FINAL DE LA CLASE Y MÉTODOS RECTANGLE
 
+
+//INICIO DE LA CLASE QUADTREE
 class QuadTree
 {
 private:
@@ -72,23 +74,24 @@ private:
 
 public:
     Rectangle Perimetro;     //Medidas del quadtree
-    bool divided = false;
+    bool divided = false;  //Es true si está dividido, es false si no está dividido
     QuadTree(){Perimetro.x = 0; Perimetro.y=0; Perimetro.h=0; Perimetro.w=0; capacity = 0;};
     QuadTree(Rectangle p, int c);
     ~QuadTree();
+    // Método que inserta un punto en el quadtree
     bool insert(Point point);
+    // Método que divide el árbol si este excede su capacidad
     void split();
     
 };
 
 QuadTree::QuadTree(Rectangle p, int c)
 {
-    //Rectangle Perimetro (p.x,p.y,p.w,p.h);
-    Perimetro.x = p.x;
-    Perimetro.y=p.y;
-    Perimetro.h=p.h;
-    Perimetro.w=p.w;
-    capacity = c;
+    Perimetro.x = p.x; //coordenada x del rectangulo perimetro
+    Perimetro.y=p.y; //coordenada y del retangulo perimetro
+    Perimetro.h=p.h; //altura del rectangulo
+    Perimetro.w=p.w; //ancho del rectangulo
+    capacity = c; //capacidad del tree
 }
 
 QuadTree::~QuadTree()
@@ -96,19 +99,20 @@ QuadTree::~QuadTree()
 }
 
 void QuadTree::split(){
-    int x = Perimetro.x; //HACER FUNCION PARA RETORNAR LOS VALORES DEL RECTANGLE
-    int y = Perimetro.y;
-    int w = Perimetro.w;
-    int h = Perimetro.h;
+    //HACER FUNCION PARA RETORNAR LOS VALORES DEL RECTANGLE 
+    int x = Perimetro.x; //coordenada x del rectangulo perimetro
+    int y = Perimetro.y; //coordenada y del retangulo perimetro
+    int w = Perimetro.w; //ancho del retangulo perimetro
+    int h = Perimetro.h; //alto del rectangulo perimetro
 
-    Rectangle ne ((x + w)/2, (y-h)/2, w/2 , h/2);
-    Rectangle nw ((x - w)/2, (y-h)/2, w/2 , h/2);
-    Rectangle se ((x + w)/2, (y+h)/2, w/2 , h/2);
-    Rectangle sw ((x - w)/2, (y+h)/2, w/2 , h/2);
-    QuadTree NW (nw, 4);
-    QuadTree NE (ne, 4);
-    QuadTree SW (sw, 4);
-    QuadTree SE (se, 4);
+    Rectangle ne ((x + w)/2, (y-h)/2, w/2 , h/2); //rectangulo de la seccion noreste
+    Rectangle nw ((x - w)/2, (y-h)/2, w/2 , h/2); //rectangulo de la seccion noroeste
+    Rectangle se ((x + w)/2, (y+h)/2, w/2 , h/2); //rectangulo de la seccion sureste
+    Rectangle sw ((x - w)/2, (y+h)/2, w/2 , h/2); //rectangulo de la seccion suroeste
+    QuadTree NW (nw, 4); //Quadtree correspondiente al hijo noroeste
+    QuadTree NE (ne, 4); //Quadtree correspondiente al hijo noreste
+    QuadTree SW (sw, 4); //Quadtree correspondiente al hijo suroeste
+    QuadTree SE (se, 4); //Quadtree correspondiente al hijo sureste
     divided = true;
 }
 
@@ -116,8 +120,6 @@ bool QuadTree::insert(Point point){
     vector<Point> points = points_vec;
     int size = points.size();
     bool ans = true;
-
-    cout << "contains? " << ans <<endl;
 
     if(ans){
         //cout << "else!" << endl;
@@ -150,25 +152,8 @@ bool QuadTree::insert(Point point){
         cout<<"void"<<endl;
         return false;
     }
-    cout << "hola" << endl;
-    cout << "printing" << endl;
-
-    for(int i=0; i < 4; i++){
-        Point p = points[i];
-        //cout << "aqui" << endl;
-        p.print_point(points[i]);
-    }
     return false;
 }
 
 #endif
 
-int main(){
-    int a=200;
-    Rectangle perim (a,a,a,a);
-    QuadTree qt (perim, 4);
-    Point p (1, 12);
-    cout << qt.insert(p);
-
-    return 0;
-}
