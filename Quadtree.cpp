@@ -19,7 +19,6 @@ bool QuadNode::isLeaf(){return NW==nullptr;}
 bool QuadNode::insert(Point point){//Método que inserta puntos en el árbol
 
     if(!this->bounds->contain_point(point)){
-        //cout << "No contengo el punto :(" << endl;
         return false;
     }
 
@@ -95,7 +94,7 @@ void QuadNode::split(){ //método que divide el nodo en 4 subnodos
 }
 
 float Point::distance(Point p) {//calcula la distancia entre dos puntos
-    int d = 0; //distance
+    int d = 0;
     int x1 = this->x;
     int y1 = this->y;
     int x2 = p.x;
@@ -108,7 +107,6 @@ float Point::distance(Point p) {//calcula la distancia entre dos puntos
 
 bool Point::intersected(Point p) { // método que evalúa si dos puntos colisionan 
     float distance= sqrt(this->distance(p)); //calcula la distancia entre los centros de los círculos
-    //cout << "The distance between the points is: "<<distance << endl;
     int diameter = (this->radius)*2;
     cout << "distance: "<<distance << endl;
     cout << "diameter: " <<diameter << endl;
@@ -126,13 +124,9 @@ void QuadNode::query_colision(){ //método que hace la consulta de los puntos qu
 
     else
     {
-        //cout << "count: "<<this->count << endl;
         for (int i = 0; i < this->count; i++) {
             for (int j = 0; j < this->count; j++) {
-                //cout << j << endl;
-                //cout << this->data[i].intersected(this->data[j]) << " " << this->data[j].x << " " << this->data[j].y << " " << this->data[i].x << "," << this->data[i].y <<  endl;
                 if (this->data[i].intersected(this->data[j]) && this->data[j].x != this->data[i].x && this->data[j].y != this->data[i].y) { //Se revisa si el punto es diferente para no incluirse a si mismo y si este intersecta con los demás
-                    //query.push_back(this->data[j]);
                     cout << "El punto: (" << this->data[i].x << "," << this->data[i].y << ") con radio:" << this->data[i].radius << "colisiona" << endl;
                     cout << "con el punto: (" << this->data[j].x << "," << this->data[j].y << ") con radio:" << this->data[j].radius << "colisiona" << endl;
                     this->data[j].highlighted = true;
