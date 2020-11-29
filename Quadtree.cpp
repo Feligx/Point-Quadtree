@@ -59,7 +59,7 @@ bool QuadNode::insert(Point point){//Método que inserta puntos en el árbol
     return false;
 }
 
-void QuadNode::split(){
+void QuadNode::split(){ //método que divide el nodo en 4 subnodos
     cout << "Spliting" << endl;
     int x= bounds->x;
     int y= bounds->y;
@@ -94,7 +94,7 @@ void QuadNode::split(){
     }
 }
 
-float Point::distance(Point p) {
+float Point::distance(Point p) {//calcula la distancia entre dos puntos
     int d = 0; //distance
     int x1 = this->x;
     int y1 = this->y;
@@ -106,7 +106,7 @@ float Point::distance(Point p) {
 }
 
 
-bool Point::intersected(Point p) {
+bool Point::intersected(Point p) { // método que evalúa si dos puntos colisionan 
     float distance= sqrt(this->distance(p)); //calcula la distancia entre los centros de los círculos
     //cout << "The distance between the points is: "<<distance << endl;
     int diameter = (this->radius)*2;
@@ -116,7 +116,7 @@ bool Point::intersected(Point p) {
 }
 
 
-void QuadNode::query_colision(){
+void QuadNode::query_colision(){ //método que hace la consulta de los puntos que colisonan dentro de UN nodo dado
     if(!isLeaf()){
         this->NW->query_colision();
         this->NE->query_colision();
@@ -144,6 +144,6 @@ void QuadNode::query_colision(){
 
 
 
-void Quadtree::query() {
+void Quadtree::query() { // wrapper que ejecuta el método query_colision para revisar colisiones desde la raíz del árbol
     root->query_colision();
 }
