@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <stdexcept>
-#include <vector>
 
 #define CAP 4 //Capacidad de nodos y arbol
 
