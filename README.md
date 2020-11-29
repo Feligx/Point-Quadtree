@@ -46,3 +46,7 @@ QuadTree de puntos en C++ para la revisión de colisiones de puntos.
     * Generando una n cantidad de puntos dada por el usuario de forma aleatoria e insertandolos en el árbol desde la raíz, y luego dibujarlos en la ventana creada.
     * Generar puntos cada vez que el usuario haga clic en la ventana en la posición del mouse, e incluyéndolos según sean insertados.
     
+# Para implementación:
+Para la implementación es fundamental la instalación del Visual Studio para poder incluir la librería SDL2 siguiendo los siguientes pasos:
+ * https://www.youtube.com/watch?v=tmGBhM8AEj8
+Además de que esto permite poder compilar y ejecutar de forma más secilla.
